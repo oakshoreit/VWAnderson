@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I Migrated 1,300 PCs at 18 — Field Notes — Vincent Anderson</title>
+  <meta name="description" content="Straight out of high school, hired by the NC Department of Revenue, handed a 1,300-machine Windows migration. The manual process would have taken years. I built something that didn't.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <ul class="nav-links" role="list">
+        <li><a href="../resume.html" class="nav-page-link">Resume</a></li>
+        <li><a href="../writing.html" class="nav-page-link">Field Notes</a></li>
+        <li><a href="../contact.html" class="btn btn-copper nav-cta">Work With Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="container">
+        <span class="eyebrow">Leadership</span>
+        <span class="copper-rule"></span>
+        <h1 class="article-headline">How I Migrated 1,300 PCs at 18</h1>
+        <p class="article-meta">5 min read &nbsp;&middot;&nbsp; NC Department of Revenue &nbsp;&middot;&nbsp; 2000&ndash;2002</p>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body-section">
+      <article class="article-body">
+        <hr class="article-rule">
+
+        <p>I was eighteen years old when I started at the North Carolina Department of Revenue. I&rsquo;d walked in straight out of high school, applied for a second-level support position in their IT department, and somehow gotten the job. No degree. No certifications to speak of. I knew enough to be useful, and apparently that was enough to get hired.</p>
+
+        <p>The environment was Windows NT and Novell NetWare 5.1, serving around 1,300 users across 30-plus statewide locations. My job, officially, was second-level support &mdash; the escalation tier between the helpdesk and the network team. Handle the things helpdesk couldn&rsquo;t resolve, route the things that needed to go higher. It was a clear enough lane.</p>
+
+        <p>About three months in, the department announced it was moving to Windows 2000. All of it. All 1,300 machines, all 30-plus locations. They had a process: a technician would visit each machine, run the upgrade wizard, wait for it to complete, handle whatever broke, move to the next one. It was the standard manual approach for the era. I watched it happen on the first few machines and started doing the math in my head.</p>
+
+        <h2>The math was wrong</h2>
+
+        <p>At the pace they were moving &mdash; factoring in travel time between locations, the upgrade itself, post-migration cleanup, and inevitable issues &mdash; this project was going to take years. Not quarters. Years. And that was before you accounted for the fact that the machines needing upgrades weren&rsquo;t sitting idle; people were working on them. The coordination overhead alone was substantial.</p>
+
+        <p>I wasn&rsquo;t assigned to solve this problem. I was second-level support. Nobody handed me a project charter. But the problem was obviously there, and obviously nobody else was going to fix the process, so I went looking for a better approach.</p>
+
+        <p>What I found was Norton Ghost and Novell ZenWorks. Ghost for disk imaging: configure one machine perfectly, capture the disk image, deploy that image to other machines instead of running upgrades manually. ZenWorks for policy-driven software deployment and configuration management: push applications, push settings, track compliance across the fleet, handle exceptions. Together, they turned a per-machine manual process into something you could run at scale.</p>
+
+        <h2>Building the methodology</h2>
+
+        <p>The imaging approach required a master image &mdash; one machine configured exactly right, with Windows 2000 installed cleanly, the right drivers, the right applications, the right baseline configuration. Getting that right took time and iteration. You had to account for hardware variations across the fleet, driver compatibility, application behavior on the new OS. But you only had to do that work once.</p>
+
+        <p>Once the master image was stable, Ghost let you clone it to drives that could be swapped in, or deploy it over the network to machines that could boot from it. Instead of a two-to-three-hour manual upgrade at each machine, you were looking at a much shorter, automated deployment that didn&rsquo;t require someone standing there watching it. ZenWorks handled the application layer &mdash; pushing department-standard software, applying configuration policies, reporting on which machines were compliant and which needed attention.</p>
+
+        <p>I documented the whole process. Not a rough outline &mdash; a complete methodology that another person could pick up and execute. That turned out to matter.</p>
+
+        <h2>It became the standard</h2>
+
+        <p>The methodology I built became how the department did the migration. Other people in the IT organization started using it. It got incorporated into the official project process. The thing that had been heading toward a multi-year manual slog moved significantly faster because there was now a repeatable, scalable approach instead of a per-machine manual effort.</p>
+
+        <p>I was eighteen. My job title was something like &ldquo;Computing Consultant.&rdquo; I had no authority to redesign the migration process, no mandate to solve the efficiency problem, and no particular reason anyone would have listened to me if I&rsquo;d just walked in and said &ldquo;here&rsquo;s what you should do instead.&rdquo;</p>
+
+        <p>But I built the thing that worked, and then the thing that worked became what people used. That&rsquo;s actually how most of the best IT projects I&rsquo;ve been part of have gone &mdash; not top-down planning followed by execution, but someone noticing a broken process and refusing to accept it.</p>
+
+        <p>The lesson I&rsquo;ve carried from this is simple, and it hasn&rsquo;t changed in 25 years: the difference between IT people who get things done and IT people who don&rsquo;t is usually whether they ask &ldquo;who assigned me this problem?&rdquo; or &ldquo;does this problem need solving?&rdquo; The migration project wasn&rsquo;t my job description. But nobody was going to sit at 1,300 machines manually if I could build something better &mdash; and nobody was going to build it for me.</p>
+
+      </article>
+    </div>
+
+    <!-- More Field Notes -->
+    <div class="article-more">
+      <div class="article-more-inner">
+        <h2>More Field Notes</h2>
+        <div class="more-notes-grid">
+          <article class="story-card">
+            <span class="card-category">Infrastructure</span>
+            <h3>The Server I Shipped to Afghanistan</h3>
+            <p>When enterprise IT meets logistics at the literal edge of the world, the solution isn&rsquo;t always what the vendor recommends.</p>
+            <a href="afghanistan.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+          <article class="story-card">
+            <span class="card-category">Security</span>
+            <h3>$500K of Lab Equipment and One Network Policy</h3>
+            <p>A routine compliance job pulled half a million dollars of research equipment offline. Mid-experiment.</p>
+            <a href="lab-equipment.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+        </div>
+        <a href="../writing.html" class="article-back-link">&larr; All Field Notes</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="../resume.html">Resume</a>
+        <a href="../writing.html">Field Notes</a>
+        <a href="../contact.html">Work With Me</a>
+      </nav>
+      <p class="footer-copy">
+        &copy; 2026 Vincent Anderson &nbsp;&middot;&nbsp;
+        <a href="https://oakshoreit.com" target="_blank" rel="noopener">Oak Shore IT</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

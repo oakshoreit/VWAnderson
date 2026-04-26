@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Server I Shipped to Afghanistan — Field Notes — Vincent Anderson</title>
+  <meta name="description" content="When a defense contractor's overseas personnel needed reliable file access over VSAT satellite, I shipped a pre-configured branch server instead of sending a technician.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <ul class="nav-links" role="list">
+        <li><a href="../resume.html" class="nav-page-link">Resume</a></li>
+        <li><a href="../writing.html" class="nav-page-link">Field Notes</a></li>
+        <li><a href="../contact.html" class="btn btn-copper nav-cta">Work With Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="container">
+        <span class="eyebrow">Infrastructure</span>
+        <span class="copper-rule"></span>
+        <h1 class="article-headline">The Server I Shipped to Afghanistan</h1>
+        <p class="article-meta">5 min read &nbsp;&middot;&nbsp; Special Communications, LLC &nbsp;&middot;&nbsp; 2018&ndash;2021</p>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body-section">
+      <article class="article-body">
+        <hr class="article-rule">
+
+        <p>The problem arrived in my inbox the way most of the interesting ones do &mdash; sideways. A defense contractor I&rsquo;d been managing IT for had personnel deployed overseas. Not &ldquo;traveling for business&rdquo; overseas. Overseas overseas. Afghanistan and Iraq, supporting active government contracts worth north of ten million dollars. Their files were back in Virginia Beach.</p>
+
+        <p>VSAT satellite internet is a specific kind of pain that most IT professionals never have to deal with. The bandwidth numbers look acceptable on paper &mdash; a few megabits, enough for email, enough for basic operations. But the latency is brutal. You&rsquo;re bouncing your signal off something in geostationary orbit 22,000 miles up. Round trips take 600 to 900 milliseconds on a good day. Try to use a standard enterprise file share over that and you will age noticeably waiting for a directory listing to populate.</p>
+
+        <p>Cloud was the obvious answer. It was also wrong. Cloud file sync products are designed around consistent internet with reasonable latency. Over VSAT, sync clients thrash constantly &mdash; fighting timeouts, retrying transfers, eating bandwidth, and generally making things worse rather than better. The people overseas needed fast, reliable access to specific working files during their operational hours. They couldn&rsquo;t afford to wait. The latency wasn&rsquo;t a minor inconvenience; it was a mission-capability issue.</p>
+
+        <h2>The right tool for the wrong environment</h2>
+
+        <p>The answer was buried in a Windows Server feature that most IT shops had never touched: BranchCache. Microsoft built it specifically for high-latency WAN connections &mdash; remote offices, retail locations, anywhere the link between the user and the file server is slow or unreliable. Paired with Offline Files for local caching, the architecture is straightforward: files live locally on a branch cache server, sync happens in the background when bandwidth allows, and latency becomes largely irrelevant because most reads are served from the local cache. The VSAT link only matters when something changes.</p>
+
+        <p>I&rsquo;d used BranchCache in other contexts. It was the right technology. The problem was deployment.</p>
+
+        <h2>You can&rsquo;t send a technician to a FOB</h2>
+
+        <p>Shipping a server to an active operational location is not a standard IT logistics problem. You can&rsquo;t just order hardware to the site. You can&rsquo;t rely on whoever receives it to do anything more complicated than plugging in cables. And you definitely can&rsquo;t expect to walk someone through a server configuration over a 700ms-latency video call while they&rsquo;re managing other priorities.</p>
+
+        <p>So I built the server here first. Complete BranchCache configuration, Group Policy integration, Offline Files caching policies, DFS replication from the Virginia Beach environment. I set up a simulated VSAT connection in the office &mdash; deliberately throttled, artificially high latency, with random packet loss built in &mdash; and tested it until I was confident the behavior on the other end would match what I was seeing in Raleigh. I documented everything at the level where someone non-technical could rack it, cable it, and power it on, and it would do the rest automatically.</p>
+
+        <p>Then I packaged it and shipped it. It went through the client&rsquo;s logistics chain, which had considerably more experience moving sensitive equipment to operational locations than I did. Once it was on-site and powered on, I connected remotely and handled final configuration. The whole process took maybe four hours of remote work on my end. From the field personnel&rsquo;s perspective, the shared drive just started working.</p>
+
+        <h2>What I took from it</h2>
+
+        <p>BranchCache never shows up in vendor keynotes. It&rsquo;s not a product anyone sells you. It&rsquo;s a feature in an operating system that&rsquo;s been around since 2009, built for exactly this scenario, and largely ignored because most IT environments don&rsquo;t have this scenario. Knowing it existed, knowing how it worked, and knowing when it was the right answer &mdash; that was the whole job.</p>
+
+        <p>The lesson I keep coming back to isn&rsquo;t about BranchCache specifically. It&rsquo;s about what happens when you actually understand the constraint instead of reaching for the nearest obvious solution. The constraint wasn&rsquo;t bandwidth. It wasn&rsquo;t even file size. It was latency combined with an environment where the people who needed the files were doing something considerably more important than troubleshooting their file share. The technology needed to get out of their way. That&rsquo;s the job &mdash; understanding what &ldquo;working&rdquo; means for the people you&rsquo;re serving, and building something that actually gets there.</p>
+
+      </article>
+    </div>
+
+    <!-- More Field Notes -->
+    <div class="article-more">
+      <div class="article-more-inner">
+        <h2>More Field Notes</h2>
+        <div class="more-notes-grid">
+          <article class="story-card">
+            <span class="card-category">Leadership</span>
+            <h3>How I Migrated 1,300 PCs at 18</h3>
+            <p>State government. Fixed budget. Zero tolerance for downtime. And a kid who&rsquo;d never managed more than a handful of machines.</p>
+            <a href="1300-pcs.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+          <article class="story-card">
+            <span class="card-category">Security</span>
+            <h3>$500K of Lab Equipment and One Network Policy</h3>
+            <p>A routine compliance job pulled half a million dollars of research equipment offline. Mid-experiment.</p>
+            <a href="lab-equipment.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+        </div>
+        <a href="../writing.html" class="article-back-link">&larr; All Field Notes</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="../resume.html">Resume</a>
+        <a href="../writing.html">Field Notes</a>
+        <a href="../contact.html">Work With Me</a>
+      </nav>
+      <p class="footer-copy">
+        &copy; 2026 Vincent Anderson &nbsp;&middot;&nbsp;
+        <a href="https://oakshoreit.com" target="_blank" rel="noopener">Oak Shore IT</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

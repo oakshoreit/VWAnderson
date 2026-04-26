@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$500K of Lab Equipment and One Network Policy — Field Notes — Vincent Anderson</title>
+  <meta name="description" content="A routine compliance enforcement job ran overnight and pulled half a million dollars of research equipment off the network — mid-experiment. What it taught me about security theater.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <ul class="nav-links" role="list">
+        <li><a href="../resume.html" class="nav-page-link">Resume</a></li>
+        <li><a href="../writing.html" class="nav-page-link">Field Notes</a></li>
+        <li><a href="../contact.html" class="btn btn-copper nav-cta">Work With Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="container">
+        <span class="eyebrow">Security</span>
+        <span class="copper-rule"></span>
+        <h1 class="article-headline">$500K of Lab Equipment and One Network Policy</h1>
+        <p class="article-meta">5 min read &nbsp;&middot;&nbsp; UPL, Ltd. &nbsp;&middot;&nbsp; 2021&ndash;2022</p>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body-section">
+      <article class="article-body">
+        <hr class="article-rule">
+
+        <p>The call came from the research team on a Tuesday afternoon. Three words in a sequence I&rsquo;d learned to dread: &ldquo;equipment,&rdquo; &ldquo;network,&rdquo; and &ldquo;offline.&rdquo; One of the automated compliance enforcement jobs had run overnight, done exactly what it was configured to do, and pulled a piece of lab instrumentation off the network. The equipment was non-compliant. It was also mid-experiment.</p>
+
+        <p>I was at UPL, Ltd. at the time &mdash; a global agricultural enterprise operating in something like 130 countries. My territory was North America. The people I supported ranged from C-suite executives, your standard white-glove IT work, to PhD-level research scientists running experiments with equipment I&rsquo;d never heard of, built by companies that in some cases no longer existed, running software from operating systems that had been end-of-life for years.</p>
+
+        <p>That last part is relevant.</p>
+
+        <h2>The equipment that couldn&rsquo;t comply</h2>
+
+        <p>The instrumentation in question was worth, conservatively, several hundred thousand dollars. It ran a proprietary operating system built on a Windows version that had been out of support for years &mdash; not because the scientists were negligent, but because the instrument vendor had never updated the firmware, and updating it yourself would void the support contract and potentially corrupt the calibration data that made the instrument worth its price in the first place.</p>
+
+        <p>The enterprise security policy required domain join and MDM compliance for everything on the network. Domain join: the instrument couldn&rsquo;t do it. MDM agent: the vendor explicitly prohibited third-party software installations. The instrument was, by any honest assessment, non-compliant with the policy. It was also not meaningfully attackable in the ways the policy was designed to prevent &mdash; it had no user accounts, no browser, no email client, no remote access capability beyond the specific protocol it used to communicate with the data collection software on the connected workstation.</p>
+
+        <p>None of that mattered to the automated enforcement job. The policy said compliant or blocked. The instrument said neither. The job said blocked.</p>
+
+        <h2>The policy wasn&rsquo;t wrong</h2>
+
+        <p>This is the part I&rsquo;ve thought about the most. The security policy wasn&rsquo;t wrong. Domain join and MDM compliance are real controls that address real risks. Unmanaged devices on an enterprise network are a genuine attack surface &mdash; endpoint visibility matters, patch management matters, configuration drift matters. If I&rsquo;d written the policy myself without knowing the research environment existed, I might have written the same one.</p>
+
+        <p>The failure wasn&rsquo;t the policy. It was that nobody who designed the policy had ever tried to apply it to a gas chromatograph. The policy was designed for endpoints &mdash; laptops, desktops, tablets &mdash; where domain join is standard and MDM agents are routine. The assumption baked into the policy was that every device on the network was that kind of device. The research lab had devices that weren&rsquo;t.</p>
+
+        <p>When a policy assumes something false about its environment and nobody catches the assumption, the enforcement job eventually runs, and something offline, and then you get a call on a Tuesday afternoon.</p>
+
+        <h2>What we actually built</h2>
+
+        <p>The resolution wasn&rsquo;t complicated, but it required work that should have been done before the enforcement job ran. We documented each piece of research instrumentation individually: what it ran, what network access it actually needed, what the realistic attack surface was, what the actual risk profile looked like. Then we designed a network architecture that reflected that reality.</p>
+
+        <p>The lab equipment went onto a properly isolated network segment. Not abandoned &mdash; isolated, with defined and documented firewall rules governing what could talk to what, monitored for anomalous behavior within the constraints of what the equipment could support. The workstations used by scientists to collect data from the instruments stayed on the enterprise network with full endpoint management. The instruments themselves had access only to what they needed, documented and reviewed, with compensating controls appropriate to their actual risk level.</p>
+
+        <p>The result was a configuration that addressed the genuine security concerns &mdash; visibility, control, blast radius in case of a compromise &mdash; without applying enterprise endpoint standards to equipment that could never support them. It also produced documentation that could survive an audit, because we&rsquo;d done the work of actually understanding the environment instead of just enforcing the standard policy and hoping nothing broke.</p>
+
+        <h2>Security theater has a real cost</h2>
+
+        <p>The thing I call security theater is the assumption that compliance equals security. It&rsquo;s the feeling of safety that comes from a policy being enforced &mdash; the checkbox checked, the audit finding cleared &mdash; without anyone asking whether the enforcement actually reduces risk in proportion to its cost.</p>
+
+        <p>The automated job that pulled the lab equipment offline was technically compliant with the security policy. It did exactly what it was told to do. And it created a worse outcome than the theoretical risk it was mitigating against, because the risk from that specific unmanaged device, in that specific isolated lab context, was low &mdash; while the cost of taking it offline mid-experiment was very real and very immediate.</p>
+
+        <p>Real security is about outcomes. It&rsquo;s about understanding what you&rsquo;re actually defending against and designing controls that are proportionate to that specific risk, in that specific environment. The controls that make sense for a user&rsquo;s laptop are not automatically the controls that make sense for a piece of research instrumentation. A policy that doesn&rsquo;t make that distinction isn&rsquo;t protecting anyone &mdash; it&rsquo;s just producing compliance reports and occasionally pulling expensive equipment offline when nobody&rsquo;s watching.</p>
+
+        <p>The checklist is not the security. The checklist is a tool, and like any tool, it&rsquo;s only useful in the hands of someone who understands what it&rsquo;s for.</p>
+
+      </article>
+    </div>
+
+    <!-- More Field Notes -->
+    <div class="article-more">
+      <div class="article-more-inner">
+        <h2>More Field Notes</h2>
+        <div class="more-notes-grid">
+          <article class="story-card">
+            <span class="card-category">Infrastructure</span>
+            <h3>The Server I Shipped to Afghanistan</h3>
+            <p>When enterprise IT meets logistics at the literal edge of the world, the solution isn&rsquo;t always what the vendor recommends.</p>
+            <a href="afghanistan.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+          <article class="story-card">
+            <span class="card-category">Leadership</span>
+            <h3>How I Migrated 1,300 PCs at 18</h3>
+            <p>State government. Fixed budget. Zero tolerance for downtime. And a kid who&rsquo;d never managed more than a handful of machines.</p>
+            <a href="1300-pcs.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+        </div>
+        <a href="../writing.html" class="article-back-link">&larr; All Field Notes</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="../resume.html">Resume</a>
+        <a href="../writing.html">Field Notes</a>
+        <a href="../contact.html">Work With Me</a>
+      </nav>
+      <p class="footer-copy">
+        &copy; 2026 Vincent Anderson &nbsp;&middot;&nbsp;
+        <a href="https://oakshoreit.com" target="_blank" rel="noopener">Oak Shore IT</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
