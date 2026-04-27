@@ -1025,6 +1025,48 @@ h1, h2, h3, h4 {
 }
 
 /* ================================================================
+   THANKS PAGE
+   ================================================================ */
+.thanks-main {
+  background: var(--charcoal);
+  min-height: calc(100vh - var(--nav-height) - 137px);
+  display: flex;
+  align-items: center;
+  padding: calc(var(--nav-height) + 40px) 40px 80px;
+}
+
+.thanks-content {
+  max-width: 560px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.thanks-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(56px, 8vw, 100px);
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 28px;
+}
+
+.thanks-sub {
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.65;
+  margin-bottom: 40px;
+}
+
+.thanks-link {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+/* ================================================================
    RESUME PAGE
    ================================================================ */
 .resume-hero {
