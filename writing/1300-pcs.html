@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How I Migrated 1,300 PCs at 18 — Field Notes — Vincent Anderson</title>
-  <meta name="description" content="Straight out of high school, hired by the NC Department of Revenue, handed a 1,300-machine Windows migration. The manual process would have taken years. I built something that didn't.">
+  <meta name="description" content="I showed up to the NC Department of Revenue in an '89 MX-6 I bought for $1,400. I was an intern. It was supposed to be a summer thing. That's not what happened.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
 
@@ -34,7 +34,7 @@
         <span class="eyebrow">Leadership</span>
         <span class="copper-rule"></span>
         <h1 class="article-headline">How I Migrated 1,300 PCs at 18</h1>
-        <p class="article-meta">5 min read &nbsp;&middot;&nbsp; NC Department of Revenue &nbsp;&middot;&nbsp; 2000&ndash;2002</p>
+        <p class="article-meta">7 min read &nbsp;&middot;&nbsp; NC Department of Revenue &nbsp;&middot;&nbsp; 2000&ndash;2002</p>
       </div>
     </header>
 
@@ -43,37 +43,71 @@
       <article class="article-body">
         <hr class="article-rule">
 
-        <p>I was eighteen years old when I started at the North Carolina Department of Revenue. I&rsquo;d walked in straight out of high school, applied for a second-level support position in their IT department, and somehow gotten the job. No degree. No certifications to speak of. I knew enough to be useful, and apparently that was enough to get hired.</p>
+        <p>I showed up to the North Carolina Department of Revenue in an &rsquo;89 Mazda MX-6 I bought for $1,400. I had put $2,200 worth of wheels on it. Another two grand in the stereo. Fifteen hundred in paint. The car was worth more in parts than it was as a car, which is probably a reasonable description of my priorities at 18.</p>
 
-        <p>The environment was Windows NT and Novell NetWare 5.1, serving around 1,300 users across 30-plus statewide locations. My job, officially, was second-level support &mdash; the escalation tier between the helpdesk and the network team. Handle the things helpdesk couldn&rsquo;t resolve, route the things that needed to go higher. It was a clear enough lane.</p>
+        <p>I was an intern. It was supposed to be a summer thing &mdash; a connection through my high school careers coordinator who knew I&rsquo;d taken a programming class and figured I might be useful. The plan was to spend a few months, go to college, move on.</p>
 
-        <p>About three months in, the department announced it was moving to Windows 2000. All of it. All 1,300 machines, all 30-plus locations. They had a process: a technician would visit each machine, run the upgrade wizard, wait for it to complete, handle whatever broke, move to the next one. It was the standard manual approach for the era. I watched it happen on the first few machines and started doing the math in my head.</p>
+        <p>That&rsquo;s not what happened.</p>
 
-        <h2>The math was wrong</h2>
+        <h2>What I walked into</h2>
 
-        <p>At the pace they were moving &mdash; factoring in travel time between locations, the upgrade itself, post-migration cleanup, and inevitable issues &mdash; this project was going to take years. Not quarters. Years. And that was before you accounted for the fact that the machines needing upgrades weren&rsquo;t sitting idle; people were working on them. The coordination overhead alone was substantial.</p>
+        <p>The Department of Revenue in 1999 was running a mixed environment &mdash; some machines still on Windows 3.11 and MS-DOS, most on Windows NT 4.0, with Novell NetWare handling identity management and file access across 30 offices statewide. Over 1,300 users. A real enterprise environment, by any measure.</p>
 
-        <p>I wasn&rsquo;t assigned to solve this problem. I was second-level support. Nobody handed me a project charter. But the problem was obviously there, and obviously nobody else was going to fix the process, so I went looking for a better approach.</p>
+        <p>The way they built new machines or fixed broken ones was the way everyone did it then &mdash; by hand. You&rsquo;d pull the machine, bring it to the server room, format the disk, install the OS, layer the software on top, one application at a time. A full afternoon for a single machine, if everything went well. Longer if it didn&rsquo;t.</p>
 
-        <p>What I found was Norton Ghost and Novell ZenWorks. Ghost for disk imaging: configure one machine perfectly, capture the disk image, deploy that image to other machines instead of running upgrades manually. ZenWorks for policy-driven software deployment and configuration management: push applications, push settings, track compliance across the fleet, handle exceptions. Together, they turned a per-machine manual process into something you could run at scale.</p>
+        <p>I watched this happen a few times and thought: there has to be a better way.</p>
 
-        <h2>Building the methodology</h2>
+        <p>There was.</p>
 
-        <p>The imaging approach required a master image &mdash; one machine configured exactly right, with Windows 2000 installed cleanly, the right drivers, the right applications, the right baseline configuration. Getting that right took time and iteration. You had to account for hardware variations across the fleet, driver compatibility, application behavior on the new OS. But you only had to do that work once.</p>
+        <h2>The imaging problem</h2>
 
-        <p>Once the master image was stable, Ghost let you clone it to drives that could be swapped in, or deploy it over the network to machines that could boot from it. Instead of a two-to-three-hour manual upgrade at each machine, you were looking at a much shorter, automated deployment that didn&rsquo;t require someone standing there watching it. ZenWorks handled the application layer &mdash; pushing department-standard software, applying configuration policies, reporting on which machines were compliant and which needed attention.</p>
+        <p>Using Norton Ghost for imaging and Novell ZenWorks for software distribution, I built a system that could deploy a fully configured workstation &mdash; OS, applications, policies, everything &mdash; in about 15 minutes. From scratch. At the user&rsquo;s desk. While they went to get a cup of coffee.</p>
 
-        <p>I documented the whole process. Not a rough outline &mdash; a complete methodology that another person could pick up and execute. That turned out to matter.</p>
+        <p>This sounds simple now. It wasn&rsquo;t simple then. Images in that era were largely hardware-dependent, which meant maintaining separate images for each specific machine configuration in the environment. It required a lot of scripting, a lot of testing, and &mdash; I will admit this freely &mdash; a lot of trial and error.</p>
 
-        <h2>It became the standard</h2>
+        <p>More than once I left a boot disk in my own machine, rebooted, and watched my hard drive get wiped clean by my own automation. That&rsquo;s how I learned that the system needed confirmation steps before doing anything irreversible. Not from a textbook. From destroying my own work, repeatedly, until I built in the safeguards myself.</p>
 
-        <p>The methodology I built became how the department did the migration. Other people in the IT organization started using it. It got incorporated into the official project process. The thing that had been heading toward a multi-year manual slog moved significantly faster because there was now a repeatable, scalable approach instead of a per-machine manual effort.</p>
+        <p>Those safeguards became the standard.</p>
 
-        <p>I was eighteen. My job title was something like &ldquo;Computing Consultant.&rdquo; I had no authority to redesign the migration process, no mandate to solve the efficiency problem, and no particular reason anyone would have listened to me if I&rsquo;d just walked in and said &ldquo;here&rsquo;s what you should do instead.&rdquo;</p>
+        <p>When the team saw what I&rsquo;d built &mdash; a deployment process that took an afternoon down to 15 minutes, repeatable, documented, runnable by anyone &mdash; they didn&rsquo;t send me back to my intern desk. They said: let&rsquo;s use this to migrate the whole organization to Windows 2000.</p>
 
-        <p>But I built the thing that worked, and then the thing that worked became what people used. That&rsquo;s actually how most of the best IT projects I&rsquo;ve been part of have gone &mdash; not top-down planning followed by execution, but someone noticing a broken process and refusing to accept it.</p>
+        <p>I was 18. I said yes.</p>
 
-        <p>The lesson I&rsquo;ve carried from this is simple, and it hasn&rsquo;t changed in 25 years: the difference between IT people who get things done and IT people who don&rsquo;t is usually whether they ask &ldquo;who assigned me this problem?&rdquo; or &ldquo;does this problem need solving?&rdquo; The migration project wasn&rsquo;t my job description. But nobody was going to sit at 1,300 machines manually if I could build something better &mdash; and nobody was going to build it for me.</p>
+        <h2>The part nobody planned for</h2>
+
+        <p>My freshman year at North Carolina A&amp;T, my mother had a stroke.</p>
+
+        <p>She made a full recovery. But I moved back to Raleigh, and the plan to just be a college student got complicated fast. I transferred credits, restructured everything, and ended up commuting &mdash; Greensboro on Tuesdays and Thursdays for a 14-hour course load, Raleigh on Mondays, Wednesdays, and Fridays for the job.</p>
+
+        <p>Eventually I transferred to NC State to close the distance. My schedule there: class 8 to 8:50am, work 9 to 5:30pm, class again 6 to 9pm.</p>
+
+        <p>I&rsquo;m not telling you this for sympathy. I&rsquo;m telling you because it&rsquo;s the context for everything else in this story. The migration planning, the site visits, the documentation &mdash; all of it happened inside that schedule. You figure out how to be efficient when inefficiency isn&rsquo;t an option.</p>
+
+        <h2>Statewide, in an MX-6</h2>
+
+        <p>Thirty offices. Raleigh, the coast, the mountains, everything in between. The deployment required physical presence &mdash; you couldn&rsquo;t push a Windows 2000 migration remotely in 2000, not at this scale, not with this infrastructure.</p>
+
+        <p>So I drove.</p>
+
+        <p>I scheduled site visits around my class schedule. Offices close to Greensboro got done between classes. Offices back east got full work days. Larger locations &mdash; 30, 40, 50 machines &mdash; took multiple days and required staying overnight. Smaller ones, five or ten machines, were done in a couple hours and I was back on the road.</p>
+
+        <p>I would pull up to a state government office in the MX-6 &mdash; wheels, stereo, the whole thing &mdash; walk in with equipment, and introduce myself as the IT guy. The looks I got were a specific kind of look. The &ldquo;you&rsquo;re the IT guy&rdquo; look. The one where someone is clearly doing math about how old I am and whether they should be concerned.</p>
+
+        <p>I let the work answer that question.</p>
+
+        <p>At the larger offices there were Network Managers who handled server configuration &mdash; my job on the server side was logistics, plug and play, getting the right hardware in the right place. The workstation migration was mine. I ran the imaging process, worked through the deployment checklist, made sure every machine came up clean before I left.</p>
+
+        <p>Then I got back in the MX-6 and drove to the next one.</p>
+
+        <h2>What it taught me</h2>
+
+        <p>I learned to see problems as invitations. The imaging process was broken, so I fixed it. The fix turned into a methodology. The methodology turned into a statewide deployment. None of that was planned &mdash; it started because I was impatient and didn&rsquo;t want to spend an afternoon dragging machines to a server room.</p>
+
+        <p>Impatience, aimed at the right problems, is a legitimate professional skill.</p>
+
+        <p>I also learned that credibility isn&rsquo;t conferred. Nobody gave me that project because of my r&eacute;sum&eacute; or my degree. They gave it to me because I solved a problem they hadn&rsquo;t asked me to solve, documented it well enough that anyone could run it, and proved it worked before I proposed scaling it. The authority came from the work.</p>
+
+        <p>That&rsquo;s still how I operate. Walk in, find the thing that&rsquo;s broken or inefficient or quietly costing someone money, fix it, show your work. The rest takes care of itself.</p>
 
       </article>
     </div>
