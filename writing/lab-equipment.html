@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>$500K of Lab Equipment and One Network Policy — Field Notes — Vincent Anderson</title>
-  <meta name="description" content="A routine compliance enforcement job ran overnight and pulled half a million dollars of research equipment off the network — mid-experiment. What it taught me about security theater.">
+  <title>No Is Not a Security Policy — Field Notes — Vincent Anderson</title>
+  <meta name="description" content="A researcher needed iPads to photograph plant samples for an AI workflow. I said no. Then I went and found the right answer — which wasn't no.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
 
@@ -33,8 +33,8 @@
       <div class="container">
         <span class="eyebrow">Security</span>
         <span class="copper-rule"></span>
-        <h1 class="article-headline">$500K of Lab Equipment and One Network Policy</h1>
-        <p class="article-meta">5 min read &nbsp;&middot;&nbsp; UPL, Ltd. &nbsp;&middot;&nbsp; 2021&ndash;2022</p>
+        <h1 class="article-headline">No Is Not a Security Policy</h1>
+        <p class="article-meta">6 min read &nbsp;&middot;&nbsp; UPL, Ltd. &nbsp;&middot;&nbsp; 2021&ndash;2022</p>
       </div>
     </header>
 
@@ -43,45 +43,69 @@
       <article class="article-body">
         <hr class="article-rule">
 
-        <p>The call came from the research team on a Tuesday afternoon. Three words in a sequence I&rsquo;d learned to dread: &ldquo;equipment,&rdquo; &ldquo;network,&rdquo; and &ldquo;offline.&rdquo; One of the automated compliance enforcement jobs had run overnight, done exactly what it was configured to do, and pulled a piece of lab instrumentation off the network. The equipment was non-compliant. It was also mid-experiment.</p>
+        <p>A researcher came to me with a simple request.</p>
 
-        <p>I was at UPL, Ltd. at the time &mdash; a global agricultural enterprise operating in something like 130 countries. My territory was North America. The people I supported ranged from C-suite executives, your standard white-glove IT work, to PhD-level research scientists running experiments with equipment I&rsquo;d never heard of, built by companies that in some cases no longer existed, running software from operating systems that had been end-of-life for years.</p>
+        <p>She needed to take pictures of plants.</p>
 
-        <p>That last part is relevant.</p>
+        <p>Specifically, she needed to photograph leaf samples in the lab, upload them to a SharePoint folder, and let an AI model measure the growth patterns automatically &mdash; tracking whether UPL&rsquo;s fertilizers and pesticides were helping crops or hurting them. The science was sophisticated. The ask, on the surface, seemed simple.</p>
 
-        <h2>The equipment that couldn&rsquo;t comply</h2>
+        <p>She wanted iPads.</p>
 
-        <p>The instrumentation in question was worth, conservatively, several hundred thousand dollars. It ran a proprietary operating system built on a Windows version that had been out of support for years &mdash; not because the scientists were negligent, but because the instrument vendor had never updated the firmware, and updating it yourself would void the support contract and potentially corrupt the calibration data that made the instrument worth its price in the first place.</p>
+        <p>I told her no.</p>
 
-        <p>The enterprise security policy required domain join and MDM compliance for everything on the network. Domain join: the instrument couldn&rsquo;t do it. MDM agent: the vendor explicitly prohibited third-party software installations. The instrument was, by any honest assessment, non-compliant with the policy. It was also not meaningfully attackable in the ways the policy was designed to prevent &mdash; it had no user accounts, no browser, no email client, no remote access capability beyond the specific protocol it used to communicate with the data collection software on the connected workstation.</p>
+        <h2>The room I was walking into</h2>
 
-        <p>None of that mattered to the automated enforcement job. The policy said compliant or blocked. The instrument said neither. The job said blocked.</p>
+        <p>UPL&rsquo;s North American headquarters in Durham was not a typical corporate office. The region employed around 500 people across North America, Canada, and Mexico &mdash; but the Durham facility itself was the research center, home to roughly 100 people. Other than a handful of logistics staff, everyone there held either a PhD or a senior sales title. The median salary in that building was somewhere around $200,000.</p>
 
-        <h2>The policy wasn&rsquo;t wrong</h2>
+        <p>I had no advanced degree. I had, at that point, never heard of a mass spectrometer.</p>
 
-        <p>This is the part I&rsquo;ve thought about the most. The security policy wasn&rsquo;t wrong. Domain join and MDM compliance are real controls that address real risks. Unmanaged devices on an enterprise network are a genuine attack surface &mdash; endpoint visibility matters, patch management matters, configuration drift matters. If I&rsquo;d written the policy myself without knowing the research environment existed, I might have written the same one.</p>
+        <p>What I did have was a clear understanding of what our network security requirements were, what Active Directory integration meant for shared device access, and what happened when you introduced consumer devices into an enterprise environment without thinking it through.</p>
 
-        <p>The failure wasn&rsquo;t the policy. It was that nobody who designed the policy had ever tried to apply it to a gas chromatograph. The policy was designed for endpoints &mdash; laptops, desktops, tablets &mdash; where domain join is standard and MDM agents are routine. The assumption baked into the policy was that every device on the network was that kind of device. The research lab had devices that weren&rsquo;t.</p>
+        <p>The iPad request wasn&rsquo;t malicious. It was intuitive. iPads are good cameras. They&rsquo;re easy to use. They connect to SharePoint natively. For someone whose job is plant biology, not IT architecture, it&rsquo;s an obvious solution.</p>
 
-        <p>When a policy assumes something false about its environment and nobody catches the assumption, the enforcement job eventually runs, and something offline, and then you get a call on a Tuesday afternoon.</p>
+        <p>The problem was everything underneath it.</p>
 
-        <h2>What we actually built</h2>
+        <h2>Why the obvious solution was the wrong solution</h2>
 
-        <p>The resolution wasn&rsquo;t complicated, but it required work that should have been done before the enforcement job ran. We documented each piece of research instrumentation individually: what it ran, what network access it actually needed, what the realistic attack surface was, what the actual risk profile looked like. Then we designed a network architecture that reflected that reality.</p>
+        <p>The workflow required multiple researchers to access various SharePoint sites and network locations. On the surface, that&rsquo;s easy &mdash; share a folder, done. But shared access without Active Directory integration means you&rsquo;re managing permissions outside your identity system. You&rsquo;re creating access pathways that your security policies can&rsquo;t see, can&rsquo;t audit, and can&rsquo;t revoke centrally when someone leaves the organization or changes roles.</p>
 
-        <p>The lab equipment went onto a properly isolated network segment. Not abandoned &mdash; isolated, with defined and documented firewall rules governing what could talk to what, monitored for anomalous behavior within the constraints of what the equipment could support. The workstations used by scientists to collect data from the instruments stayed on the enterprise network with full endpoint management. The instruments themselves had access only to what they needed, documented and reviewed, with compensating controls appropriate to their actual risk level.</p>
+        <p>In a research facility handling proprietary scientific data, that&rsquo;s not a theoretical risk. It&rsquo;s a compliance problem. I couldn&rsquo;t let it happen.</p>
 
-        <p>The result was a configuration that addressed the genuine security concerns &mdash; visibility, control, blast radius in case of a compromise &mdash; without applying enterprise endpoint standards to equipment that could never support them. It also produced documentation that could survive an audit, because we&rsquo;d done the work of actually understanding the environment instead of just enforcing the standard policy and hoping nothing broke.</p>
+        <p>Beyond that, these tablets needed to be available to multiple people, in multiple lab locations, with access to multiple points on the network. That&rsquo;s not a consumer device use case. That&rsquo;s an enterprise endpoint. Consumer iPads aren&rsquo;t built to live in that environment cleanly &mdash; not without workarounds that create their own problems and maintenance overhead.</p>
 
-        <h2>Security theater has a real cost</h2>
+        <p>I needed these devices in Active Directory. iPads couldn&rsquo;t do that. Not the way this deployment needed to work.</p>
 
-        <p>The thing I call security theater is the assumption that compliance equals security. It&rsquo;s the feeling of safety that comes from a policy being enforced &mdash; the checkbox checked, the audit finding cleared &mdash; without anyone asking whether the enforcement actually reduces risk in proportion to its cost.</p>
+        <h2>The pushback</h2>
 
-        <p>The automated job that pulled the lab equipment offline was technically compliant with the security policy. It did exactly what it was told to do. And it created a worse outcome than the theoretical risk it was mitigating against, because the risk from that specific unmanaged device, in that specific isolated lab context, was low &mdash; while the cost of taking it offline mid-experiment was very real and very immediate.</p>
+        <p>The researcher went to the Chief Scientific Officer. The CSO escalated it. It went all the way up the chain.</p>
 
-        <p>Real security is about outcomes. It&rsquo;s about understanding what you&rsquo;re actually defending against and designing controls that are proportionate to that specific risk, in that specific environment. The controls that make sense for a user&rsquo;s laptop are not automatically the controls that make sense for a piece of research instrumentation. A policy that doesn&rsquo;t make that distinction isn&rsquo;t protecting anyone &mdash; it&rsquo;s just producing compliance reports and occasionally pulling expensive equipment offline when nobody&rsquo;s watching.</p>
+        <p>I made my case. Here&rsquo;s the security exposure. Here&rsquo;s the compliance issue. Here&rsquo;s what we need from any device that&rsquo;s going to operate in this environment. This isn&rsquo;t about convenience &mdash; it&rsquo;s about what happens when someone leaves and we can&rsquo;t cleanly revoke their access, or when we get audited and can&rsquo;t show a clean chain of custody on research data.</p>
 
-        <p>The checklist is not the security. The checklist is a tool, and like any tool, it&rsquo;s only useful in the hands of someone who understands what it&rsquo;s for.</p>
+        <p>The decision came back in my favor.</p>
+
+        <p>But I want to be clear about something: winning that argument wasn&rsquo;t the goal. Finding the right answer was.</p>
+
+        <h2>What actually happened</h2>
+
+        <p>I went looking for a Windows tablet that could genuinely function as a tablet &mdash; not a laptop in tablet clothing, but something with a good camera, a touch-first interface, and real portability &mdash; while still integrating cleanly into Active Directory.</p>
+
+        <p>We found it.</p>
+
+        <p>The researchers got their tablets. They got the camera workflow they needed. They got shared access to SharePoint and the network locations they needed, with proper AD-backed permissions. The AI model got its leaf photographs. The security team got auditable, centrally managed endpoints that followed the same policies as every other device in the organization.</p>
+
+        <p>Nobody had to compromise. The researchers got their workflow. The organization got its security posture. Nobody had to choose between them.</p>
+
+        <h2>What it taught me</h2>
+
+        <p>Security theater is what happens when IT says no without offering a better yes.</p>
+
+        <p>The easiest thing I could have done in that situation was block the request, cite the policy, and move on. Technically correct. Operationally useless. And it would have left a group of researchers doing workarounds that were probably less secure than the original ask.</p>
+
+        <p>The harder thing &mdash; and the more valuable thing &mdash; was understanding what they actually needed, finding a solution that met both sets of requirements, and being able to defend it clearly enough that it survived a challenge at the highest levels of the organization.</p>
+
+        <p>That&rsquo;s what IT leadership actually looks like. Not the person who guards the network. The person who figures out how to give the business what it needs without leaving the door open.</p>
+
+        <p>The plants, for what it&rsquo;s worth, were fine.</p>
 
       </article>
     </div>
