@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Server I Shipped to Afghanistan — Field Notes — Vincent Anderson</title>
-  <meta name="description" content="When a defense contractor's overseas personnel needed reliable file access over VSAT satellite, I shipped a pre-configured branch server instead of sending a technician.">
+  <meta name="description" content="It's 2012. Our guys at Kandahar Airfield can't pull a blueprint at 2am because the VSAT is running at 512Kbps. The solution wasn't faster internet. There was no faster internet.">
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
 
@@ -34,7 +34,7 @@
         <span class="eyebrow">Infrastructure</span>
         <span class="copper-rule"></span>
         <h1 class="article-headline">The Server I Shipped to Afghanistan</h1>
-        <p class="article-meta">5 min read &nbsp;&middot;&nbsp; Special Communications, LLC &nbsp;&middot;&nbsp; 2018&ndash;2021</p>
+        <p class="article-meta">7 min read &nbsp;&middot;&nbsp; Special Communications, LLC &nbsp;&middot;&nbsp; 2018&ndash;2021</p>
       </div>
     </header>
 
@@ -43,31 +43,69 @@
       <article class="article-body">
         <hr class="article-rule">
 
-        <p>The problem arrived in my inbox the way most of the interesting ones do &mdash; sideways. A defense contractor I&rsquo;d been managing IT for had personnel deployed overseas. Not &ldquo;traveling for business&rdquo; overseas. Overseas overseas. Afghanistan and Iraq, supporting active government contracts worth north of ten million dollars. Their files were back in Virginia Beach.</p>
+        <p>It&rsquo;s 2012. I&rsquo;m sitting in Virginia Beach getting a call from Kandahar Airfield at 2am. One of our guys needs a blueprint &mdash; the underground conduit layout for a section of base they&rsquo;re pouring concrete on in a few hours. The file is sitting on a server in Virginia. The VSAT connection between here and there is running at something south of 1Mbps on a good night, and tonight is not a good night.</p>
 
-        <p>VSAT satellite internet is a specific kind of pain that most IT professionals never have to deal with. The bandwidth numbers look acceptable on paper &mdash; a few megabits, enough for email, enough for basic operations. But the latency is brutal. You&rsquo;re bouncing your signal off something in geostationary orbit 22,000 miles up. Round trips take 600 to 900 milliseconds on a good day. Try to use a standard enterprise file share over that and you will age noticeably waiting for a directory listing to populate.</p>
+        <p>The download stalls out. They can&rsquo;t work. They wait.</p>
 
-        <p>Cloud was the obvious answer. It was also wrong. Cloud file sync products are designed around consistent internet with reasonable latency. Over VSAT, sync clients thrash constantly &mdash; fighting timeouts, retrying transfers, eating bandwidth, and generally making things worse rather than better. The people overseas needed fast, reliable access to specific working files during their operational hours. They couldn&rsquo;t afford to wait. The latency wasn&rsquo;t a minor inconvenience; it was a mission-capability issue.</p>
+        <p>This is the third time this week.</p>
 
-        <h2>The right tool for the wrong environment</h2>
+        <p>Special Communications was doing serious infrastructure work at KAF &mdash; laying fiber-optic cable, running conduit through concrete manholes, designing the underground network that would eventually connect buildings across an active military installation. The blueprints for that work were massive AutoCAD files. Detailed drawings of every junction, every road crossing, every maintenance hole. The kind of files you can&rsquo;t work from memory and can&rsquo;t reconstruct on site.</p>
 
-        <p>The answer was buried in a Windows Server feature that most IT shops had never touched: BranchCache. Microsoft built it specifically for high-latency WAN connections &mdash; remote offices, retail locations, anywhere the link between the user and the file server is slow or unreliable. Paired with Offline Files for local caching, the architecture is straightforward: files live locally on a branch cache server, sync happens in the background when bandwidth allows, and latency becomes largely irrelevant because most reads are served from the local cache. The VSAT link only matters when something changes.</p>
+        <p>They needed those files. They needed them reliably. And &ldquo;reliably&rdquo; was not a word anyone was using to describe VSAT in 2012.</p>
 
-        <p>I&rsquo;d used BranchCache in other contexts. It was the right technology. The problem was deployment.</p>
+        <h2>The problem with satellite internet in a war zone</h2>
 
-        <h2>You can&rsquo;t send a technician to a FOB</h2>
+        <p>VSAT works by bouncing your signal off a satellite in geostationary orbit 22,000 miles above the equator. That distance introduces latency you can&rsquo;t engineer around &mdash; typically 600 to 800 milliseconds round trip, on a good day, before you factor in weather, interference, or the fact that you&rsquo;re sharing bandwidth with everyone else on the base. Speeds at the time were somewhere around 512Kbps to 1Mbps. File syncs that should have taken minutes were scheduled overnight and still took hours.</p>
 
-        <p>Shipping a server to an active operational location is not a standard IT logistics problem. You can&rsquo;t just order hardware to the site. You can&rsquo;t rely on whoever receives it to do anything more complicated than plugging in cables. And you definitely can&rsquo;t expect to walk someone through a server configuration over a 700ms-latency video call while they&rsquo;re managing other priorities.</p>
+        <p>We were also running voice over that same connection. A five-minute call without a dropout was a small victory.</p>
 
-        <p>So I built the server here first. Complete BranchCache configuration, Group Policy integration, Offline Files caching policies, DFS replication from the Virginia Beach environment. I set up a simulated VSAT connection in the office &mdash; deliberately throttled, artificially high latency, with random packet loss built in &mdash; and tested it until I was confident the behavior on the other end would match what I was seeing in Raleigh. I documented everything at the level where someone non-technical could rack it, cable it, and power it on, and it would do the rest automatically.</p>
+        <p>The files these guys needed weren&rsquo;t small. A single AutoCAD drawing of a conduit junction could run 50MB or more. On a 512Kbps connection, that&rsquo;s over ten minutes of perfect, uninterrupted transfer. At 2am in Kandahar, perfect and uninterrupted was not the baseline.</p>
 
-        <p>Then I packaged it and shipped it. It went through the client&rsquo;s logistics chain, which had considerably more experience moving sensitive equipment to operational locations than I did. Once it was on-site and powered on, I connected remotely and handled final configuration. The whole process took maybe four hours of remote work on my end. From the field personnel&rsquo;s perspective, the shared drive just started working.</p>
+        <p>The solution wasn&rsquo;t faster internet. There was no faster internet. The solution was getting the files closer to the people who needed them.</p>
 
-        <h2>What I took from it</h2>
+        <h2>Building it stateside</h2>
 
-        <p>BranchCache never shows up in vendor keynotes. It&rsquo;s not a product anyone sells you. It&rsquo;s a feature in an operating system that&rsquo;s been around since 2009, built for exactly this scenario, and largely ignored because most IT environments don&rsquo;t have this scenario. Knowing it existed, knowing how it worked, and knowing when it was the right answer &mdash; that was the whole job.</p>
+        <p>The plan was straightforward: a physical file server at KAF, running Windows Server, with BranchCache enabled so the most-accessed files would be cached locally. Overnight sync jobs would pull updates over the VSAT when bandwidth was least contested. During working hours, the guys would be pulling files off a local server ten feet away instead of one 7,000 miles away.</p>
 
-        <p>The lesson I keep coming back to isn&rsquo;t about BranchCache specifically. It&rsquo;s about what happens when you actually understand the constraint instead of reaching for the nearest obvious solution. The constraint wasn&rsquo;t bandwidth. It wasn&rsquo;t even file size. It was latency combined with an environment where the people who needed the files were doing something considerably more important than troubleshooting their file share. The technology needed to get out of their way. That&rsquo;s the job &mdash; understanding what &ldquo;working&rdquo; means for the people you&rsquo;re serving, and building something that actually gets there.</p>
+        <p>Security was non-negotiable. These weren&rsquo;t just construction files &mdash; they were detailed maps of a U.S. military installation. Underground conduit layouts. Building positions. Road infrastructure. In the wrong hands, that&rsquo;s a targeting document.</p>
+
+        <p>The server ran BitLocker encryption at the drive level. Beyond that, the files themselves were encrypted using a DoD-specified system layered on top. Every access policy we could lock down, we locked down. The assumption was that the physical security of the equipment could not be guaranteed &mdash; this was a forward operating base in an active war zone &mdash; so the data had to be able to survive the worst case. If that server was ever taken, the data on it needed to be unreadable.</p>
+
+        <p>Power was its own problem. KAF ran on generator power, but military generators serve military priorities. Base power could be cut at any time &mdash; not because something broke, but because something more important needed it. We couldn&rsquo;t build a mission-critical file server and then tie its uptime to a power source that might be deliberately redirected at 0300.</p>
+
+        <p>So I specced and shipped a UPS with the rack &mdash; enough runtime to survive a transfer or a short outage cleanly. And Specomm ran their own separate generator. Not as a backup to base power. As the primary. Base power was the backup.</p>
+
+        <p>That decision probably saved us three or four outages that would have otherwise corrupted an active sync job or left someone staring at a dead screen mid-drawing.</p>
+
+        <p>I built the whole thing in Virginia Beach.</p>
+
+        <p>Dell server. Cisco router, switch, and Meraki wireless. I cabled everything myself, port by port, color-coded and labeled. Every cable had a tag. Every port was documented. I wrote a step-by-step installation guide detailed enough that someone who had never touched a server rack could follow it and get it right.</p>
+
+        <p>Because that&rsquo;s exactly who was going to be installing it.</p>
+
+        <p>The guys at KAF were construction and engineering professionals. Exceptional at what they did. Not IT people. I needed the setup process to be idiot-proof &mdash; not because they were idiots, but because I wasn&rsquo;t going to be there, I couldn&rsquo;t be there, and if something went wrong during installation I needed them to be able to troubleshoot it from a printed document at 3am without calling me.</p>
+
+        <p>When it was done I boxed everything, drove it to Fort Bragg, and shipped it on a military flight. Getting through the gate took longer than getting the equipment on the plane.</p>
+
+        <h2>What happened when it landed</h2>
+
+        <p>They racked it. They followed the documentation. It came up clean.</p>
+
+        <p>The 2am calls about file access stopped.</p>
+
+        <p>We still had occasional issues &mdash; BranchCache has its own quirks around version conflicts when multiple people are editing the same drawing, and low-latency syncs across high-latency connections require some patience in the configuration. But the core problem &mdash; people unable to do their jobs because a file was physically too far away &mdash; was solved.</p>
+
+        <h2>What it taught me</h2>
+
+        <p>Two things.</p>
+
+        <p>First: the right solution to a connectivity problem is not always a connectivity solution. Sometimes it&rsquo;s logistics. Sometimes it&rsquo;s physics. Sometimes you ship a server to Afghanistan.</p>
+
+        <p>Second: documentation is infrastructure. The reason that deployment worked isn&rsquo;t because I built a good server. It&rsquo;s because I anticipated every step of the installation process, wrote it down clearly, and handed it to people who had never done it before. The server was the hardware. The documentation was the system.</p>
+
+        <p>I still build that way. Every deployment I do &mdash; whether it&rsquo;s a server room in Raleigh or a network buildout for a client I&rsquo;ll never visit in person &mdash; gets documented like someone else is going to have to fix it at 2am without me.</p>
+
+        <p>Because eventually, someone will.</p>
 
       </article>
     </div>
