@@ -248,6 +248,7 @@ h1, h2, h3, h4 {
 }
 
 .hero-eyebrow {
+  font-size: 14px;
   animation: fadeInUp 0.8s ease both;
 }
 
@@ -1633,7 +1634,7 @@ a.resume-contact-item:hover {
 }
 
 .hero-title {
-  font-size: 1.4rem;
+  font-size: 1.05rem;
   color: rgba(242, 237, 227, 0.7);
   letter-spacing: 0.5px;
   margin-bottom: 0.25rem;
