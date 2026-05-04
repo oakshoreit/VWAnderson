@@ -1633,11 +1633,11 @@ a.resume-contact-item:hover {
 }
 
 .hero-title {
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: rgba(242, 237, 227, 0.7);
   letter-spacing: 0.5px;
   margin-bottom: 0.25rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 .hero-location {
   font-size: 0.75rem;
