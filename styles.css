@@ -264,7 +264,7 @@ h1, h2, h3, h4 {
 
 .hero-tagline {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.5vw, 21px);
+  font-size: clamp(20px, 1.875vw, 26px);
   font-weight: 300;
   font-style: italic;
   color: rgba(255, 255, 255, 0.6);
