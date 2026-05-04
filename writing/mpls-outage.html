@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9X81VSN6Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N9X81VSN6Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Night I Rebuilt a Network With a Cell Phone and an Open Source Router — Field Notes — Vincent Anderson</title>
+  <meta name="description" content="AT&T replaced the router during a planned upgrade. The power went out. The router never came back. A replacement was three days away. The plant couldn't wait three days.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <ul class="nav-links" role="list">
+        <li><a href="../resume.html" class="nav-page-link">Resume</a></li>
+        <li><a href="../writing.html" class="nav-page-link">Field Notes</a></li>
+        <li><a href="../contact.html" class="btn btn-copper nav-cta">Work With Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="container">
+        <span class="eyebrow">Manufacturing</span>
+        <span class="copper-rule"></span>
+        <h1 class="article-headline">The Night I Rebuilt a Network With a Cell Phone and an Open Source Router</h1>
+        <p class="article-meta">7 min read &nbsp;&middot;&nbsp; Brick manufacturer, Research Triangle &nbsp;&middot;&nbsp; 2016&ndash;2018</p>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body-section">
+      <article class="article-body">
+        <hr class="article-rule">
+
+        <p>It started as a routine infrastructure upgrade.</p>
+
+        <p>A carrier came out to replace the router at one of the plant locations as part of a planned refresh. Standard procedure. The kind of thing that happens dozens of times a year at manufacturing operations across the country.</p>
+
+        <p>The next day, the power went out. When it came back, the router didn&rsquo;t.</p>
+
+        <h2>What dead in the water actually looks like.</h2>
+
+        <p>People talk about downtime in manufacturing like it&rsquo;s an inconvenience. A slow morning. Some frustrated emails.</p>
+
+        <p>That&rsquo;s not what it looks like from the inside.</p>
+
+        <p>When that circuit went down, the plant lost its connection to the ERP system at the home office. No ERP connection meant no order fulfillment. No order fulfillment meant no brick getting loaded. Trucks were coming. Orders existed. The brick was sitting in the yard. And none of it could move because the system that told the floor what to load was unreachable.</p>
+
+        <p>The PLCs running the kilns were onsite &mdash; they kept the fires burning, the manufacturing process continued. But the engineers who normally managed those systems remotely couldn&rsquo;t see them from the office anymore. They had to get in their cars and drive to the plant just to do their jobs.</p>
+
+        <p>One downed router. Multiple locations affected. Engineers on the road. Loading operations stopped.</p>
+
+        <p>That&rsquo;s what dead in the water actually looks like.</p>
+
+        <h2>The carrier couldn&rsquo;t fix it.</h2>
+
+        <p>I went onsite and spent the better part of a day troubleshooting with the carrier. We worked through everything. Neither of us could figure out why the router wouldn&rsquo;t come back up. A replacement was coming &mdash; but not for three days.</p>
+
+        <p>Three days in a brick manufacturing operation isn&rsquo;t a number you absorb. It&rsquo;s a number you feel in orders not fulfilled, trucks turned away, and a production schedule that doesn&rsquo;t care about your circuit problem.</p>
+
+        <p>I wasn&rsquo;t willing to wait three days.</p>
+
+        <h2>The overnight fix.</h2>
+
+        <p>Early the next morning I started working on an alternative. The pieces were unconventional but they were available: a cellular wireless connection, an open source Linux-based software router I&rsquo;d been working with for years, and a clear picture of the network architecture I needed to replicate.</p>
+
+        <p>The goal wasn&rsquo;t to build something elegant. The goal was to build something that worked by the time the plant opened.</p>
+
+        <p>What got the plant back online wasn&rsquo;t luck &mdash; it was the kind of instinct that only comes from years of solving problems that don&rsquo;t have documented solutions. Knowing that the software router could do what I needed it to do. Knowing that mirroring the IP addressing scheme was the fastest path to transparent failover. Knowing, before I started, that the pieces I had available could be assembled into something that would work. That&rsquo;s not something you find in a manual. It&rsquo;s pattern recognition built from two decades of walking into broken environments and finding a way through.</p>
+
+        <p>I tunneled the cellular connection back to the home office through the software router and mirrored the IP addressing scheme from the downed circuit. The critical network segments &mdash; the ones the manufacturing equipment and ERP integration ran on &mdash; came back up as if the primary circuit had never gone down. The equipment didn&rsquo;t know the difference. The engineers could see their systems again. The floor could load brick.</p>
+
+        <p>By the time the plant came online that morning, the workaround was running. The replacement router arrived two days later. We cut back over, decommissioned the workaround, and moved on.</p>
+
+        <p>Total additional downtime after the overnight fix: zero.</p>
+
+        <h2>What we did after the crisis.</h2>
+
+        <p>When the replacement router arrived and we cut back over to the primary circuit, I did something that doesn&rsquo;t always happen after an emergency fix: I didn&rsquo;t just close the ticket and move on.</p>
+
+        <p>We had gotten lucky on the timeline. But what we didn&rsquo;t have was a system. And that was the real problem.</p>
+
+        <p>A single circuit. A single router. A single point of failure between the production floor and the systems that told it what to do. That vulnerability hadn&rsquo;t changed just because we&rsquo;d found a workaround. It was still there, waiting for the next power outage, the next failed hardware, the next carrier technician who couldn&rsquo;t explain why the equipment wasn&rsquo;t coming back up.</p>
+
+        <p>What we built instead was a system that could be deployed at any plant location in minutes &mdash; by whoever happened to be onsite, without needing me on the road.</p>
+
+        <p>Pre-configured machines. Mirrored network architecture. A plug-it-in solution that any staff member could execute from a simple set of instructions. If the primary circuit ever went down again, the failover wasn&rsquo;t a phone call to me and a two-hour drive. It was a power cable and a couple of minutes.</p>
+
+        <p>We shipped a unit to each plant location. They sat on a shelf, ready. The next time a circuit failed &mdash; and in manufacturing, there is always a next time &mdash; the plant manager didn&rsquo;t call me in a panic. They plugged in the box and called me to let me know it was working.</p>
+
+        <p>That&rsquo;s the difference between solving a problem and solving a problem.</p>
+
+        <h2>What this story is actually about.</h2>
+
+        <p>It&rsquo;s not about cellular modems or open source routing tools or IP addressing schemes.</p>
+
+        <p>It&rsquo;s about what happens in the aftermath of a crisis that most people skip &mdash; the part where you take the thing that just broke your operation and make sure it can never break it the same way again.</p>
+
+        <p>Every manufacturing operation has this vulnerability somewhere. A single circuit. A single router. A single point of failure between your production floor and the systems that tell it what to do. Most of the time it holds. When it doesn&rsquo;t, the question isn&rsquo;t just whether someone shows up to fix it &mdash; it&rsquo;s whether they stick around long enough to make sure you&rsquo;re never in that position again.</p>
+
+        <p>That&rsquo;s the job.</p>
+
+      </article>
+    </div>
+
+    <!-- More Field Notes -->
+    <div class="article-more">
+      <div class="article-more-inner">
+        <h2>More Field Notes</h2>
+        <div class="more-notes-grid">
+          <article class="story-card">
+            <span class="card-category">Manufacturing</span>
+            <h3>The Day We Got the Forklifts Out of the Break Room</h3>
+            <p>A truck would pull in. The driver would find a ticket. Then they&rsquo;d go looking for a forklift operator. Sometimes they found one quickly. The clock was always running.</p>
+            <a href="forklift-ipad.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+          <article class="story-card">
+            <span class="card-category">Infrastructure</span>
+            <h3>The Server I Shipped to Afghanistan</h3>
+            <p>When the FOB needed a file server and the supply chain had other ideas, I found another way. Here&rsquo;s what happens when enterprise IT meets logistics at the literal edge of the world.</p>
+            <a href="afghanistan.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+        </div>
+        <a href="../writing.html" class="article-back-link">&larr; All Field Notes</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="../resume.html">Resume</a>
+        <a href="../writing.html">Field Notes</a>
+        <a href="../contact.html">Work With Me</a>
+      </nav>
+      <p class="footer-copy">
+        &copy; 2026 Vincent Anderson &nbsp;&middot;&nbsp;
+        <a href="https://oakshoreit.com" target="_blank" rel="noopener">Oak Shore IT</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
