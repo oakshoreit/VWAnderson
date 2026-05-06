@@ -15,7 +15,7 @@ Last updated: May 4, 2026
 
 **Title:** Virtual IT Director · AI Strategist
 **Niche:** Manufacturing & operations-driven companies, 50–200 employees, Research Triangle NC
-**Tagline:** "I keep manufacturing businesses running. Quietly, completely, and before you know there's a problem."
+**Tagline:** "25+ years keeping manufacturing businesses running. Quietly, completely, and before you know there's a problem."
 
 **Brand voice:** Direct. Confident. No fluff. Earned swagger. The Wolf, not the vendor.
 **Color identity:** Charcoal (#1A1A1A), Copper (#B07D4A), Cream (#F2EDE3)
