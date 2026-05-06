@@ -712,6 +712,45 @@ h1, h2, h3, h4 {
   margin: 0 auto 40px;
 }
 
+.newsletter-form-native {
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.newsletter-form-row {
+  display: flex;
+}
+
+.newsletter-form-native input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 18px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  background: rgba(242, 237, 227, 0.08);
+  border: 1px solid rgba(242, 237, 227, 0.22);
+  border-right: none;
+  color: var(--cream);
+  outline: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.newsletter-form-native input[type="email"]::placeholder {
+  color: rgba(242, 237, 227, 0.35);
+}
+
+.newsletter-form-native input[type="email"]:focus {
+  background: rgba(242, 237, 227, 0.13);
+  border-color: rgba(176, 125, 74, 0.55);
+}
+
+.newsletter-form-msg {
+  margin-top: 12px;
+  font-size: 14px;
+  min-height: 20px;
+  text-align: center;
+}
+
 /* ================================================================
    CTA STRIP — replaces newsletter on homepage
    ================================================================ */
@@ -1503,6 +1542,15 @@ a.resume-contact-item:hover {
 @media (max-width: 640px) {
   .section-newsletter-inline {
     padding: 64px 24px;
+  }
+
+  .newsletter-form-row {
+    flex-direction: column;
+  }
+
+  .newsletter-form-native input[type="email"] {
+    border-right: 1px solid rgba(242, 237, 227, 0.22);
+    border-bottom: none;
   }
 
   .section-cta-strip {
