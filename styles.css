@@ -688,6 +688,31 @@ h1, h2, h3, h4 {
 }
 
 /* ================================================================
+   NEWSLETTER INLINE — homepage embedded signup
+   ================================================================ */
+.section-newsletter-inline {
+  background: var(--charcoal);
+  padding: 92px 40px;
+  text-align: center;
+}
+
+.section-newsletter-inline h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+
+.newsletter-inline-desc {
+  font-size: 16px;
+  line-height: 1.68;
+  color: rgba(242, 237, 227, 0.66);
+  max-width: 480px;
+  margin: 0 auto 40px;
+}
+
+/* ================================================================
    CTA STRIP — replaces newsletter on homepage
    ================================================================ */
 .section-cta-strip {
@@ -1476,6 +1501,10 @@ a.resume-contact-item:hover {
 
 /* Small mobile — tighter spacing, stack buttons and stats */
 @media (max-width: 640px) {
+  .section-newsletter-inline {
+    padding: 64px 24px;
+  }
+
   .section-cta-strip {
     padding: 64px 24px;
   }
