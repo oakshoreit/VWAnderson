@@ -269,7 +269,10 @@
 <div id="subbar" role="complementary" aria-label="Newsletter signup">
   <div class="subbar-inner">
     <span class="subbar-label"><span class="subbar-label-brand">Field Notes</span> &mdash; straight talk on IT strategy.</span>
-    <div data-beehiiv-form="d9bfab2a-8cb0-4b18-8d59-473b8121a19c"></div>
+    <form class="subbar-form" onsubmit="submitSubbar(event)">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="btn btn-copper">Subscribe</button>
+    </form>
     <button class="subbar-dismiss" onclick="dismissSubbar()" aria-label="Dismiss">&times;</button>
   </div>
 </div>
@@ -319,6 +322,23 @@
   function dismissSubbar() {
     document.getElementById(‘subbar’).classList.remove(‘is-visible’);
     localStorage.setItem(‘vwa_subbar_dismissed’, ‘1’);
+  }
+
+  function submitSubbar(e) {
+    e.preventDefault();
+    var bar = document.getElementById(‘subbar’);
+    var email = bar.querySelector(‘input[type="email"]’).value;
+    var btn = bar.querySelector(‘button[type="submit"]’);
+    btn.disabled = true; btn.textContent = ‘Sending…’;
+    fetch(‘https://vwanderson.beehiiv.com/create’, {
+      method: ‘POST’, mode: ‘no-cors’,
+      headers: { ‘Content-Type’: ‘application/x-www-form-urlencoded’ },
+      body: ‘email=’ + encodeURIComponent(email) + ‘&double_opt=false&utm_source=sticky_bar’
+    }).then(function() {
+      bar.innerHTML = ‘<p class="subbar-confirm">You’re in. Watch your inbox.</p>’;
+      localStorage.setItem(‘vwa_subbar_dismissed’, ‘1’);
+      setTimeout(function() { bar.classList.remove(‘is-visible’); }, 3000);
+    });
   }
 </script>
 
