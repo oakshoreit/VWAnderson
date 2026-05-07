@@ -268,6 +268,20 @@
     </div>
   </footer>
 
+<!-- ============================================================
+     STICKY SUBSCRIBE BAR
+     ============================================================ -->
+<div id="subbar" role="complementary" aria-label="Newsletter signup">
+  <div class="subbar-inner">
+    <span class="subbar-label"><span class="subbar-label-brand">Field Notes</span> &mdash; straight talk on IT strategy.</span>
+    <form class="subbar-form" onsubmit="submitSubbar(event)">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="btn btn-copper">Subscribe</button>
+    </form>
+    <button class="subbar-dismiss" onclick="dismissSubbar()" aria-label="Dismiss">&times;</button>
+  </div>
+</div>
+
 <div id="newsletter-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#1A1A1A;border:1px solid #B07D4A;border-radius:8px;padding:2.5rem;max-width:440px;width:90%;position:relative;">
     <button onclick="closePopup()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#888;font-size:1.25rem;cursor:pointer;line-height:1;">&times;</button>
@@ -304,6 +318,45 @@
   function closePopup() {
     document.getElementById('newsletter-popup').style.display = 'none';
     localStorage.setItem('vwa_popup_dismissed', '1');
+  }
+
+  // Sticky subscribe bar
+  (function() {
+    if (localStorage.getItem('vwa_subbar_dismissed')) return;
+    var shown = false;
+    window.addEventListener('scroll', function() {
+      if (!shown && window.scrollY > window.innerHeight) {
+        shown = true;
+        document.getElementById('subbar').classList.add('is-visible');
+      }
+    }, { passive: true });
+  })();
+
+  function dismissSubbar() {
+    document.getElementById('subbar').classList.remove('is-visible');
+    localStorage.setItem('vwa_subbar_dismissed', '1');
+  }
+
+  function submitSubbar(e) {
+    e.preventDefault();
+    var bar = document.getElementById('subbar');
+    var email = bar.querySelector('input[type="email"]').value;
+    var btn = bar.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    fetch('https://vwanderson.beehiiv.com/create', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email=' + encodeURIComponent(email) + '&double_opt=false&sent_from_orchid=true'
+    }).then(function() {
+      bar.innerHTML = '<p class="subbar-confirm">You’re in. Watch your inbox.</p>';
+      localStorage.setItem('vwa_subbar_dismissed', '1');
+      setTimeout(function() { bar.classList.remove('is-visible'); }, 3000);
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe';
+    });
   }
 
   function submitNewsletterForm(e, form) {

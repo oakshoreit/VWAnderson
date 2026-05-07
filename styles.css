@@ -1452,11 +1452,124 @@ a.resume-contact-item:hover {
 }
 
 /* ================================================================
+   STICKY SUBSCRIBE BAR
+   ================================================================ */
+#subbar {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  z-index: 900;
+  background: var(--charcoal);
+  border-bottom: 1px solid rgba(176, 125, 74, 0.28);
+  transform: translateY(-100%);
+  transition: transform 0.35s ease;
+}
+
+#subbar.is-visible {
+  transform: translateY(0);
+}
+
+.subbar-inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.subbar-label {
+  font-size: 13px;
+  color: rgba(242, 237, 227, 0.6);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.subbar-label-brand {
+  color: var(--copper);
+  font-weight: 500;
+}
+
+.subbar-form {
+  display: flex;
+  flex: 1;
+  max-width: 380px;
+}
+
+.subbar-form input[type="email"] {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  background: rgba(242, 237, 227, 0.07);
+  border: 1px solid rgba(242, 237, 227, 0.18);
+  border-right: none;
+  color: var(--cream);
+  outline: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.subbar-form input[type="email"]::placeholder {
+  color: rgba(242, 237, 227, 0.28);
+}
+
+.subbar-form input[type="email"]:focus {
+  background: rgba(242, 237, 227, 0.11);
+  border-color: rgba(176, 125, 74, 0.5);
+}
+
+.subbar-form .btn {
+  padding: 8px 20px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.subbar-dismiss {
+  background: none;
+  border: none;
+  color: rgba(242, 237, 227, 0.35);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+
+.subbar-dismiss:hover {
+  color: rgba(242, 237, 227, 0.75);
+}
+
+.subbar-confirm {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--copper);
+  text-align: center;
+  padding: 14px 40px;
+}
+
+/* ================================================================
    RESPONSIVE
    ================================================================ */
 
 /* Mobile — hero stacks, photo hidden, all grids single-column */
 @media (max-width: 768px) {
+  .subbar-label {
+    display: none;
+  }
+
+  .subbar-inner {
+    padding: 10px 20px;
+    gap: 10px;
+  }
+
+  .subbar-form {
+    max-width: none;
+  }
+
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 48px;
@@ -1540,6 +1653,12 @@ a.resume-contact-item:hover {
 
 /* Small mobile — tighter spacing, stack buttons and stats */
 @media (max-width: 640px) {
+  .subbar-form input[type="email"] {
+    border-right: 1px solid rgba(242, 237, 227, 0.18);
+    border-bottom: none;
+    min-width: 0;
+  }
+
   .section-newsletter-inline {
     padding: 64px 24px;
   }
