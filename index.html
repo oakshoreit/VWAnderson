@@ -288,7 +288,7 @@
 <script>
   (function() {
     const POPUP_KEY = 'vwa_popup_dismissed';
-    if (localStorage.getItem(POPUP_KEY)) return;
+    // TESTING: localStorage check removed — popup shows every visit
     let triggered = false;
     function showPopup() {
       if (triggered) return;
@@ -308,16 +308,11 @@
     localStorage.setItem('vwa_popup_dismissed', '1');
   }
 
-  // Sticky subscribe bar
+  // Sticky subscribe bar — TESTING: bypasses localStorage + scroll; shows after 2s
   (function() {
-    if (localStorage.getItem('vwa_subbar_dismissed')) return;
-    var shown = false;
-    window.addEventListener('scroll', function() {
-      if (!shown && window.scrollY > window.innerHeight) {
-        shown = true;
-        document.getElementById('subbar').classList.add('is-visible');
-      }
-    }, { passive: true });
+    setTimeout(function() {
+      document.getElementById('subbar').classList.add('is-visible');
+    }, 2000);
   })();
 
   function dismissSubbar() {
