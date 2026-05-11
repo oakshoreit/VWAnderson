@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "PowerShell(Get-Command *)",
+      "Bash(pdftotext *)",
+      "Bash(git push *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\vince\\\\OneDrive - Oakshore IT\\\\Desktop\\\\Oakshore IT\\\\VWAnderson - website\" -Recurse -Filter \"*.html\")",
+      "Bash(Select-Object Name, FullName)",
+      "WebFetch(domain:vwanderson.com)",
+      "WebFetch(domain:embeds.beehiiv.com)",
+      "WebFetch(domain:vwanderson.beehiiv.com)",
+      "Bash(curl -s \"https://vwanderson.beehiiv.com\")",
+      "WebFetch(domain:subscribe-forms.beehiiv.com)",
+      "Bash(curl -s \"https://subscribe-forms.beehiiv.com/v3/forms/e659a102-7c4d-4dec-abc4-90abed548392\")",
+      "Bash(curl -s \"https://vwanderson.com\")",
+      "Bash(git restore *)"
+    ]
+  }
+}
