@@ -311,12 +311,10 @@
 
   function closePopup() {
     document.getElementById(‘newsletter-popup’).style.display = ‘none’;
-    localStorage.setItem(‘vwa_popup_dismissed’, ‘1’);
   }
 
-  // Sticky subscribe bar — resets each browser session
+  // Sticky subscribe bar — appears after hero scrolls off screen
   (function() {
-    if (sessionStorage.getItem(‘vwa_subbar_dismissed_session’)) return;
     var shown = false;
     window.addEventListener(‘scroll’, function() {
       if (!shown && window.scrollY > window.innerHeight) {
@@ -328,7 +326,6 @@
 
   function dismissSubbar() {
     document.getElementById(‘subbar’).classList.remove(‘is-visible’);
-    sessionStorage.setItem(‘vwa_subbar_dismissed_session’, ‘1’);
   }
 
 </script>
