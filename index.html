@@ -265,16 +265,6 @@
     </div>
   </footer>
 
-<!-- ============================================================
-     STICKY SUBSCRIBE BAR
-     ============================================================ -->
-<div id="subbar" role="complementary" aria-label="Newsletter signup">
-  <div class="subbar-inner">
-    <span class="subbar-label"><span class="subbar-label-brand">Field Notes:</span> straight talk on IT strategy.</span>
-    <script async data-uid="ad506bb089" src="https://vwfieldnotes.kit.com/ad506bb089/index.js"></script>
-    <button class="subbar-dismiss" onclick="dismissSubbar()" aria-label="Dismiss">&times;</button>
-  </div>
-</div>
 
 <div id="newsletter-popup" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
   <div style="background:#1A1A1A;border:1px solid #B07D4A;border-radius:8px;padding:2.5rem;max-width:440px;width:90%;position:relative;">
@@ -313,22 +303,9 @@
     document.getElementById(‘newsletter-popup’).style.display = ‘none’;
   }
 
-  // Sticky subscribe bar — appears after hero scrolls off screen
-  (function() {
-    var shown = false;
-    window.addEventListener(‘scroll’, function() {
-      if (!shown && window.scrollY > window.innerHeight) {
-        shown = true;
-        document.getElementById(‘subbar’).classList.add(‘is-visible’);
-      }
-    }, { passive: true });
-  })();
-
-  function dismissSubbar() {
-    document.getElementById(‘subbar’).classList.remove(‘is-visible’);
-  }
 
 </script>
 
+<script async data-uid="ad506bb089" src="https://vwfieldnotes.kit.com/ad506bb089/index.js"></script>
 </body>
 </html>
