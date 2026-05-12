@@ -284,7 +284,8 @@
       var popup = document.getElementById(‘newsletter-popup’);
       popup.style.display = ‘flex’;
       var inner = popup.querySelector(‘div’);
-      if (!inner.querySelector(‘script[data-uid="ccd6453137"]’)) {
+      if (!inner.dataset.kitInjected) {
+        inner.dataset.kitInjected = ‘1’;
         var s = document.createElement(‘script’);
         s.setAttribute(‘async’, ‘’);
         s.setAttribute(‘data-uid’, ‘ccd6453137’);
