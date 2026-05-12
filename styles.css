@@ -1022,6 +1022,12 @@ h1, h2, h3, h4 {
   margin-bottom: 56px;
 }
 
+.article-cta { margin: 3rem 0 2rem; }
+.article-cta-rule { border: none; border-top: 1px solid var(--copper); opacity: 0.4; margin-bottom: 1.5rem; }
+.article-cta-text { font-size: 0.95rem; color: var(--text-muted, #6b6560); line-height: 1.7; }
+.article-cta-text a { color: var(--copper); text-decoration: none; }
+.article-cta-text a:hover { text-decoration: underline; }
+
 .article-body p {
   font-family: var(--font-serif);
   font-size: clamp(18px, 1.6vw, 21px);
