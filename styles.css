@@ -779,6 +779,13 @@ h1, h2, h3, h4 {
 /* ================================================================
    CONTACT PAGE
    ================================================================ */
+.contact-calendly { background: var(--charcoal); padding: 4rem 2rem; text-align: center; }
+.contact-calendly-inner { max-width: 600px; margin: 0 auto; }
+.contact-calendly-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--copper); margin-bottom: 1rem; }
+.contact-calendly-heading { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--cream); margin-bottom: 1rem; line-height: 1.2; }
+.contact-calendly-sub { color: rgba(255,255,255,0.55); font-size: 1rem; margin-bottom: 2rem; line-height: 1.7; }
+.contact-or { font-size: 0.9rem; color: var(--text-muted, #6b6560); margin-bottom: 1.5rem; }
+
 .contact-page {
   background: var(--cream-light);
   padding: 80px 40px 100px;
