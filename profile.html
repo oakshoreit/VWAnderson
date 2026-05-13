@@ -55,6 +55,18 @@
       color: var(--text-muted, #6b6560);
       font-size: 0.9rem;
     }
+    .profile-resume-link {
+      display: inline-block;
+      font-size: 0.9rem;
+      color: var(--text-muted, #6b6560);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(107, 101, 96, 0.35);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .profile-resume-link:hover {
+      color: var(--copper);
+      border-color: var(--copper);
+    }
   </style>
 </head>
 
@@ -64,7 +76,6 @@
     <div class="nav-inner">
       <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
       <ul class="nav-links" role="list">
-        <li><a href="resume.html" class="nav-page-link">Resume</a></li>
         <li><a href="profile.html" class="nav-page-link">Profile</a></li>
         <li><a href="/fieldnotes/" class="nav-page-link">Field Notes</a></li>
         <li><a href="https://calendly.com/vince-vwanderson/30min" target="_blank" rel="noopener" class="btn btn-copper nav-cta">Work With Me</a></li>
@@ -125,7 +136,7 @@
           <p>In 2025 I founded Oak Shore IT and launched this practice as a Fractional IT Director and AI Strategist serving manufacturing and operations-driven businesses in the Research Triangle. I work with owners and executives at companies between 50 and 200 employees who need senior technology leadership without the overhead of a full-time hire.</p>
           <p>I take on a limited number of clients. Engagements are retainer-based, the relationship is direct, and the accountability is total. If the technology stops working, you call me. Not a help desk. Not an account manager. Me.</p>
           <p>Twenty-five years. Three continents. One point of contact.</p>
-          <p class="profile-coda"><em>Full resume available on request.</em></p>
+          <a href="/resume.html" class="profile-resume-link">View full resume &rarr;</a>
         </section>
 
       </div>
@@ -137,7 +148,6 @@
     <div class="footer-inner">
       <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="resume.html">Resume</a>
         <a href="profile.html">Profile</a>
         <a href="/fieldnotes/">Field Notes</a>
         <a href="https://calendly.com/vince-vwanderson/30min" target="_blank" rel="noopener">Work With Me</a>
