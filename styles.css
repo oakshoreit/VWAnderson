@@ -808,6 +808,21 @@ h1, h2, h3, h4 {
   margin: 0 auto 40px;
 }
 
+.btn-cta-ghost {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(26, 26, 26, 0.8);
+  border: 1.5px solid rgba(26, 26, 26, 0.5);
+  padding: 0.75rem 1.75rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-cta-ghost:hover { background: rgba(26, 26, 26, 0.1); }
+
 /* ================================================================
    CONTACT PAGE
    ================================================================ */
