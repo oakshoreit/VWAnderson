@@ -1111,6 +1111,24 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
+.article-figure {
+  margin: 8px 0 36px;
+}
+
+.article-figure img {
+  width: 100%;
+  display: block;
+}
+
+.article-figure figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-muted, #6b6560);
+  text-align: center;
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+}
+
 .article-body > p:first-child::first-letter {
   font-family: var(--font-serif);
   font-size: 4.2em;
