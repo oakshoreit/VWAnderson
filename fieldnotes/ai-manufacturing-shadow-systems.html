@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9X81VSN6Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N9X81VSN6Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Automation That Wasn't Automated — Field Notes — Vincent Anderson</title>
+  <meta property="og:image" content="https://vwanderson.com/assets/img/article-card-ai-manufacturing.png">
+  <meta property="og:title" content="The Automation That Wasn't Automated">
+  <meta property="og:description" content="Three people on his team were already using the AI vendor's tool on their own laptops. No IT sign-off. No security review. Nobody had told the ERP the numbers were being touched.">
+  <meta property="og:url" content="https://vwanderson.com/fieldnotes/ai-manufacturing-shadow-systems.html">
+  <meta property="og:type" content="article">
+  <meta name="description" content="AI tools are entering manufacturing operations through the browser, not through IT. Here's what that means when your environment includes PLCs, ERPs, and control systems nobody mapped.">
+  <link rel="canonical" href="https://vwanderson.com/fieldnotes/ai-manufacturing-shadow-systems.html">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231A1A1A'/><text x='16' y='22' font-family='Georgia,serif' font-size='14' font-weight='bold' fill='%23B07D4A' text-anchor='middle' letter-spacing='1'>VA</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="nav-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <ul class="nav-links" role="list">
+        <li><a href="/profile.html" class="nav-page-link">Profile</a></li>
+        <li><a href="/fieldnotes/" class="nav-page-link">Field Notes</a></li>
+        <li><a href="/contact.html" class="btn btn-copper nav-cta">Work With Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Article Hero -->
+    <header class="article-hero">
+      <div class="container">
+        <span class="eyebrow">Manufacturing</span>
+        <span class="copper-rule"></span>
+        <h1 class="article-headline">The Automation That Wasn&rsquo;t Automated</h1>
+        <p class="article-meta">6 min read &nbsp;&middot;&nbsp; Agricultural research, multi-site operations</p>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <div class="article-body-section">
+      <article class="article-body">
+        <hr class="article-rule">
+
+        <p>I was doing a systems walkthrough at an agricultural research facility a few years back. Multi-site operation, global reach, ERP-dependent from seed inventory to field reporting. The kind of place where if IT goes down, so does the data that determines what gets planted next season.</p>
+
+        <p>Halfway through the floor, an operations manager pulled me aside and pointed to a control panel on a fertilizer mixing line. Old unit. The kind of PLC that&rsquo;s been running the same ladder logic since before anyone at the company knew what ladder logic was. It controlled the mixing ratios, logged the output, and handed off batch data to a workstation that fed the ERP.</p>
+
+        <p>&ldquo;We had someone in here last month, AI vendor. &rdquo; he said. &ldquo; Said they could optimize the batch process. Read the sensor data, adjust ratios in real time, improve yield.&rdquo;</p>
+
+        <p>I asked if they&rsquo;d done a pilot.</p>
+
+        <p>He said they hadn&rsquo;t. But three people on his team were already using the vendor&rsquo;s tool on their own laptops to pull historical sensor data and run their own analysis. Informally. No IT sign-off. No security review. No one had told the ERP the numbers were being touched.</p>
+
+        <p>That&rsquo;s not a story about rogue employees. That&rsquo;s a story about a vacuum.</p>
+
+        <h2>How AI actually enters a manufacturing operation.</h2>
+
+        <p>When AI tools started becoming easy to use, most manufacturing operations were not ready for what happened next: the tools came in through the browser. Not through IT. Not through a vendor contract. Through a free account someone signed up for with their work email, a Chrome extension that looked harmless, a dashboard that marketing was already using that someone in ops decided to try.</p>
+
+        <p>None of it shows up on your network diagram. None of it shows up in your software inventory. And most of the people using these tools aren&rsquo;t hiding it &mdash; they genuinely don&rsquo;t think it&rsquo;s a security question. They think it&rsquo;s a productivity question. They&rsquo;re right about that. They&rsquo;re just not thinking about the other question.</p>
+
+        <p>According to Microsoft&rsquo;s 2024 Work Trend Index, 78% of AI users are bringing their own AI tools to work &mdash; and at small and midsize businesses, that number climbs to 80%. In manufacturing environments, that figure almost certainly undercounts what&rsquo;s happening on the operations side, because operations teams have never waited for IT approval to solve a production problem. They find the tool that works and they use it.</p>
+
+        <h2>The risk nobody&rsquo;s talking about.</h2>
+
+        <blockquote class="article-pullquote">The real risk isn&rsquo;t that AI will break your systems. It&rsquo;s that AI will touch your systems in ways you can&rsquo;t see, through paths you didn&rsquo;t approve, integrated with data sources you didn&rsquo;t inventory.</blockquote>
+
+        <p>PLCs are a specific problem here. They weren&rsquo;t designed with AI connectivity in mind. The ladder logic running your mixing line, your conveyor sequencing, your temperature controls was written to be reliable and deterministic. It does the same thing the same way every time. That&rsquo;s the point.</p>
+
+        <p>When someone starts pulling data off those systems through an unsanctioned tool, they&rsquo;re not just creating a data governance issue. They&rsquo;re potentially creating a control loop issue. If the AI output feeds back into operations decisions &mdash; and it will, because that&rsquo;s why people use these tools &mdash; you&rsquo;ve introduced a variable into your production environment that nobody mapped and nobody owns.</p>
+
+        <p>Your ERP is downstream from that. If the AI tool is interpreting your sensor data and someone is using those interpretations to make batch decisions, and those decisions affect what gets entered into the ERP, you now have a second system of record. You just don&rsquo;t know it yet.</p>
+
+        <p>This is the version of AI risk that doesn&rsquo;t make it into the vendor webinars. The vendor webinars are about opportunity. The floor is where you find the exposure.</p>
+
+        <h2>What a governed path actually looks like.</h2>
+
+        <p>According to a 2026 study aggregating Gallup and McKinsey data, 44% of U.S. workers say their employer has no clear AI policy, or aren&rsquo;t sure if one exists. At smaller companies, that number climbs to 59%.</p>
+
+        <p>An AI policy in a manufacturing environment isn&rsquo;t a compliance document. It&rsquo;s an inventory question.</p>
+
+        <p>What data are your people already sending to AI tools? Which systems are those tools touching? Where does the output land, and what decisions is it informing?</p>
+
+        <p>You don&rsquo;t need to ban AI to answer those questions. Companies that try to ban it just drive it further underground &mdash; which is exactly the wrong direction when the risk is already about things you can&rsquo;t see. What you need is a governed path: a way for operations teams to bring AI requests through IT so you can vet the vendor, define the data boundary, and make sure that when a tool touches your production data, it does so in a way that doesn&rsquo;t create a shadow system nobody mapped.</p>
+
+        <p>The agricultural research facility I mentioned made that decision. They ran a formal pilot with the AI vendor, under IT oversight, with clearly defined data scope. The operations team got the yield optimization they were after. IT got visibility into what was touching the control systems. The ERP stayed as the single source of truth.</p>
+
+        <p>That&rsquo;s not a technology story. That&rsquo;s a governance story. And in my experience, the companies that get AI right in manufacturing are the ones who recognize that before the side door quietly opens.</p>
+
+        <div class="article-cta">
+          <hr class="article-cta-rule">
+          <p class="article-cta-text">If you&rsquo;re not sure what AI tools are already touching your production environment, that&rsquo;s the conversation worth having first. <a href="https://calendly.com/vince-vwanderson/30min" target="_blank" rel="noopener">Schedule a conversation &rarr;</a></p>
+        </div>
+
+      </article>
+    </div>
+
+    <!-- More Field Notes -->
+    <div class="article-more">
+      <div class="article-more-inner">
+        <h2>More Field Notes</h2>
+        <div class="more-notes-grid">
+          <article class="story-card">
+            <span class="card-category">Manufacturing</span>
+            <h3>The Day We Got the Forklifts Out of the Break Room</h3>
+            <p>A truck would pull in. The driver would find a ticket. Then they&rsquo;d go looking for a forklift operator. Sometimes they found one quickly. The clock was always running.</p>
+            <a href="manufacturing-floor-forklift-operations.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+          <article class="story-card">
+            <span class="card-category">Manufacturing</span>
+            <h3>The Night I Rebuilt a Network With a Cell Phone and a Software-Based Router</h3>
+            <p>AT&amp;T replaced the router. The power went out. The router never came back. Three days until a replacement arrived. I wasn&rsquo;t willing to wait three days.</p>
+            <a href="manufacturing-network-outage-recovery.html" class="card-link">Read <span class="card-arrow" aria-hidden="true">&rarr;</span></a>
+          </article>
+        </div>
+        <a href="/fieldnotes/" class="article-back-link">&larr; All Field Notes</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Subscribe CTA -->
+  <section class="section-newsletter-inline" aria-labelledby="subscribe-cta-heading">
+    <div class="container container--narrow">
+      <span class="eyebrow">Field Notes</span>
+      <span class="copper-rule" style="margin-inline:auto;"></span>
+      <h2 id="subscribe-cta-heading">Enjoyed this? There&rsquo;s more where it came from.</h2>
+      <script async data-uid="ccd6453137" src="https://vwfieldnotes.kit.com/ccd6453137/index.js"></script>
+    </div>
+  </section>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="va-mark" aria-label="Vincent Anderson — Home">VA</a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/profile.html">Profile</a>
+        <a href="/fieldnotes/">Field Notes</a>
+        <a href="https://calendly.com/vince-vwanderson/30min" target="_blank" rel="noopener">Work With Me</a>
+      </nav>
+      <p class="footer-copy">
+        &copy; 2026 Vincent Anderson &nbsp;&middot;&nbsp;
+        <a href="https://oakshoreit.com" target="_blank" rel="noopener">Oak Shore IT</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
