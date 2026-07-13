@@ -13,7 +13,7 @@ Last updated: May 4, 2026
 **Operating company:** Oak Shore IT LLC — managed IT services, downstream from consulting
 **Owner:** Vincent Anderson
 
-**Title:** Virtual IT Director · AI Strategist
+**Title:** Fractional IT Director · AI Strategist
 **Niche:** Manufacturing & operations-driven companies, 50–200 employees, Research Triangle NC
 **Tagline:** "25+ years keeping manufacturing businesses running. Quietly, completely, and before you know there's a problem."
 

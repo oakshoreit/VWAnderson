@@ -1,7 +1,7 @@
 # VWAnderson.com — Project Notes
 
 ## Positioning
-Vincent Anderson — Virtual IT Director & AI Strategy Advisor
+Vincent Anderson — Fractional IT Director & AI Strategist
 Personal brand site. Separate from Oak Shore IT (his MSP).
 VWAnderson = the person. Oak Shore = the company.
 Oak Shore can reference VWAnderson. Not the other way around aggressively.
